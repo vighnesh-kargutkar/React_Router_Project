@@ -1,7 +1,8 @@
+import { Outlet } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 
-function MainNavigation() {
-  return (
+export default function MainNavigation() {
+  return (<>
     <header className={classes.header}>
       <nav>
         <ul className={classes.list}>
@@ -14,7 +15,7 @@ function MainNavigation() {
         </ul>
       </nav>
     </header>
+    <Outlet/>
+  </>
   );
 }
-
-export default MainNavigation;
