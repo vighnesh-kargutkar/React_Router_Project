@@ -5,7 +5,7 @@
 //    Every list item should include a link to the respective EventDetailPage
 // 7. Output the ID of the selected event on the EventDetailPage
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
-import {createBrowserRouter ,RouterProvider} from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home";
 import EventsPage from "./components/EventsPage";
 import EventDetailPage from "./components/EventDetailPage";
@@ -13,20 +13,36 @@ import NewEventPage from "./components/NewEventPage";
 import EditEventPage from "./components/EditEventPage";
 import MainNavigation from "./components/MainNavigation";
 
-const router =createBrowserRouter([
-  { path : '/',
-    element: <MainNavigation/>,
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainNavigation />,
     children: [
-      { path:'' ,element: <Home/> },
-      { path:'/events' ,element: <EventsPage/>},
-      { path:'/events/:id' ,element: <EventDetailPage/>},
-      { path:'/events/new' ,element: <NewEventPage/>},
-      { path:'/events/:id' ,element: <EditEventPage/>}
-    ]
+      { path: "", element: <Home /> },
+      {
+        path: "/events",
+        element: <EventsPage />,
+        loader: async () => {
+          const response = await fetch("http://localhost:8080/events");
+          if (!response.ok) {
+            //
+            console.log("error in dataa ");
+          } else {
+            const resData = await response.json();
+            console.log(resData.events);
+
+            return resData.events;
+          }
+        },
+      },
+      { path: "/events/:id", element: <EventDetailPage /> },
+      { path: "/events/new", element: <NewEventPage /> },
+      { path: "/events/:id", element: <EditEventPage /> },
+    ],
   },
-])
+]);
 function App() {
-  return <RouterProvider router={router}/>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
