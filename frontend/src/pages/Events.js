@@ -1,13 +1,11 @@
-import { useLoaderData } from "react-router-dom";
-import EventsList from "../components/EventsList";
+import { useLoaderData } from 'react-router-dom';
+
+import EventsList from '../components/EventsList';
 
 function EventsPage() {
-  const data = useLoaderData();
-  return (
-    <>
-      <EventsList events={data} />
-    </>
-  );
+  const events = useLoaderData();
+
+  return <EventsList events={events} />;
 }
 
 export default EventsPage;
